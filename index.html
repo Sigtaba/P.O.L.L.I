@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Arduino UI</title>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="public/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  </head>
+  <body>
+    <section class="navigate">
+      <a name="nav"></a>
+      <ul>
+        <li><a href="#controls"><i class="fa fa-gamepad fa-3x" aria-hidden="true"></i><br>Controls</a></li>
+        <li><a href="#analytics"><i class="fa fa-bar-chart fa-3x" aria-hidden="true"></i><br>Analytics</a></li>
+        <li><a href="#hardware"><i class="fa fa-cubes fa-3x" aria-hidden="true"></i><br>Hardware</a></li>
+        <li><a href="#developerz"><i class="fa fa-users fa-3x" aria-hidden="true"></i><br>Developers</a></li>
+        <li><a href="https://youtu.be/2-coaPPl-Yk" target="_blank"><i class="fa fa-youtube-play fa-3x" aria-hidden="true"></i><br>Video</a></li>
+      </ul>
+    </section>
+    <section class="hero">
+      <h1>P.O.L.L.I.</h1>
+      <h3>Program Operated Load Lifting Instrument</h3>
+    </section>
+    <section class="gradient">
+      <section class="controls" id="controls">
+        <h2>Controls</h2>
+        <section id="checklist" class="checkbox-inline">
+          <ul>
+            <h3 id="tableh3">Preoperational Checklist</h3>
+            <li>
+              <input type="checkbox" id="styled-checkbox-1" name="obstruction" value="obstruction" class="checkbox checkbox1 styled-checkbox">
+              <label for="styled-checkbox-1">No obstructions in path of robot</label>
+            </li>
+            <li>
+              <input type="checkbox" id="styled-checkbox-2" name="connection" value="connection" class="checkbox checkbox2 styled-checkbox">
+              <label for="styled-checkbox-2">Connector to control board is tight</label>
+            </li>
+            <li>
+              <input type="checkbox" id="styled-checkbox-3" name="servo" value="servo" class="checkbox checkbox3 styled-checkbox">
+              <label for="styled-checkbox-3">Servo motor connections are tight</label>
+            </li>
+            <li>
+              <input type="checkbox" id="styled-checkbox-4" name="base" value="base" class="checkbox checkbox4 styled-checkbox">
+              <label for="styled-checkbox-4">Base connection is tight</label>
+            </li>
+            <li>
+              <input type="checkbox" id="styled-checkbox-5" name="safety" value="safety" class="checkbox checkbox5 styled-checkbox">
+              <label for="styled-checkbox-5">All safety and proper PPE in place</label>
+            </li>
+            <h5>All boxes must be checked before controls are operational.</h5>
+          </ul>
+        </section>
+        <div id="controls-container" class="container disabled-controls">
+          <div class="row">
+            <div class="col-md-4">
+            <h4 class="vert">Shoulder</h4>
+              <div class="btn-group" data-toggle="buttons">
+                <input class="servobtn1" type="range"  min="30" max="115" value="90" name="servo1" onchange="updateTextInput1(this.value), updateCounter1(servo1Data);"/>
+                <input type="text" id="textInput1" value="90" class="position">
+              </div>
+            </div>
+            <div class="col-md-4">
+            <h4 class="vert">Elbow</h4>
+              <div class="btn-group" data-toggle="buttons">
+                <input class="servobtn2" type="range"  min="50" max="140" value="90" name="servo2" onchange="updateTextInput2(this.value), updateCounter2(servo2Data);"/>
+                <input type="text" id="textInput2" value="90" class="position">
+              </div>
+            </div>
+            <div class="col-md-4">
+            <h4 class="vert">Wrist</h4>
+              <div class="btn-group" data-toggle="buttons">
+                <input class="servobtn3" type="range"  min="20" max="160" value="90" name="servo3" onchange="updateTextInput3(this.value), updateCounter3(servo3Data);"/>
+                <input type="text" id="textInput3" value="90" class="position">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+            <h4 class="horiz">Claw</h4>
+              <div class="btn-group" data-toggle="buttons">
+                <input class="servobtn4" type="range"  min="0" max="95" value="95" name="servo4" onchange="updateTextInput4(this.value), updateCounter4(servo4Data);"/>
+                <input type="text" id="textInput4" value="95" class="position">
+              </div>
+            </div>
+            <div class="col-md-4" id="music-button">
+              <h4>Power</h4>
+              <button id="piezo" type="button" name="piezo" onclick="updateHornCounter(hornCount)"><i class="fa fa-power-off fa-4x" aria-hidden="true"></i></button>
+            </div>
+            <div class="col-md-4">
+              <h4 class="horiz">Base</h4>
+              <div class="btn-group" data-toggle="buttons">
+                <input class="servobtn" type="range"  min="1" max="179" value="90" name="servo0" onchange="updateTextInput(this.value), updateCounter(servo0Data);"/>
+                <input type="text" id="textInput" value="90" class="position">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <a name="analytics"></a>
+          <table class="analytics">
+            <h3 id="tableh3">Analytics</h3>
+            <tr>
+              <th>Servo:</th>
+              <td>Power</td>
+              <td>Shoulder</td>
+              <td>Elbow</td>
+              <td>Wrist</td>
+              <td>Claw</td>
+              <td>Base</td>
+            </tr>
+            <tr>
+              <th>Activations:</th>
+              <td><input type="text" id="hornCounter" class="counter" value="0"></td>
+              <td><input type="text" id="textCounter1" class="counter" value="0"></td>
+              <td><input type="text" id="textCounter2" class="counter" value="0"></td>
+              <td><input type="text" id="textCounter3" class="counter" value="0"></td>
+              <td><input type="text" id="textCounter4" class="counter" value="0"></td>
+              <td><input type="text" id="textCounter" class="counter" value="0"></td>
+            </tr>
+          </table>
+        </div>
+      </section>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+      <script src="/socket.io/socket.io.js"></script>
+      <script>
+        $(document).ready(function() {
+          $('.checkbox').on('change',function(){
+            if ($(".checkbox1").is(":checked") && $(".checkbox2").is(":checked") && $(".checkbox3").is(":checked") && $(".checkbox4").is(":checked") && $(".checkbox5").is(":checked")) {
+              $("#controls-container").removeClass("disabled-controls");
+              $("#checklist").fadeOut();
+            }
+          });
+        });
+      </script>
+      <script>
+
+
+        var socket = io.connect('http://localhost');
+
+        var servo0Data = 1;
+        var servo1Data = 1;
+        var servo2Data = 1;
+        var servo3Data = 1;
+        var servo4Data = 1;
+        var hornCount = 1;
+
+        $('.servobtn').on('change',function(){
+            console.log("Setting Servo Pos:",$('input[name=servo0]').val())
+            socket.emit('servo0',{pos:$('input[name=servo0]').val()});
+            servo0Data ++;
+        });
+        $('.servobtn1').on('change',function(){
+            console.log("Setting Servo Pos:",$('input[name=servo1]').val())
+            socket.emit('servo1',{pos:$('input[name=servo1]').val()});
+            servo1Data ++;
+        });
+        $('.servobtn2').on('change',function(){
+            console.log("Setting Servo Pos:",$('input[name=servo2]').val())
+            socket.emit('servo2',{pos:$('input[name=servo2]').val()});
+            servo2Data ++;
+        });
+        $('.servobtn3').on('change',function(){
+            console.log("Setting Servo Pos:",$('input[name=servo3]').val())
+            socket.emit('servo3',{pos:$('input[name=servo3]').val()});
+            servo3Data ++;
+        });
+        $('.servobtn4').on('change',function(){
+            console.log("Setting Servo Pos:",$('input[name=servo4]').val())
+            socket.emit('servo4',{pos:$('input[name=servo4]').val()});
+            servo4Data ++;
+        });
+        $('#piezo').on('click', function(){
+          console.log("music should play")
+          socket.emit('piezo');
+          hornCount ++;
+        })
+
+        function updateTextInput(val) {
+            document.getElementById('textInput').value=val;
+          }
+        function updateTextInput1(val) {
+            document.getElementById('textInput1').value=val;
+          }
+        function updateTextInput2(val) {
+            document.getElementById('textInput2').value=val;
+          }
+        function updateTextInput3(val) {
+            document.getElementById('textInput3').value=val;
+          }
+        function updateTextInput4(val) {
+            document.getElementById('textInput4').value=val;
+          }
+
+        function updateCounter(servo0Data) {
+            document.getElementById('textCounter').value=servo0Data;
+            if (servo0Data > 250) {
+              alert("servo 0 (base) needs service")
+            }
+          }
+        function updateCounter1(servo1Data) {
+            document.getElementById('textCounter1').value=servo1Data;
+            if (servo1Data > 250) {
+              alert("servo 1 (shoulder) needs service")
+            }
+          }
+        function updateCounter2(servo2Data) {
+            document.getElementById('textCounter2').value=servo2Data;
+            if (servo2Data > 250) {
+              alert("servo 2 (elbow) needs service")
+            }
+          }
+        function updateCounter3(servo3Data) {
+            document.getElementById('textCounter3').value=servo3Data;
+            if (servo3Data > 250) {
+              alert("servo 3 (wrist) needs service")
+            }
+          }
+        function updateCounter4(servo4Data) {
+            document.getElementById('textCounter4').value=servo4Data;
+            if (servo4Data > 250) {
+              alert("servo 4 (claw) needs service")
+            }
+          }
+        function updateHornCounter(hornCount) {
+            document.getElementById('hornCounter').value=hornCount;
+            if (hornCount > 250) {
+              alert("horn needs service")
+            }
+          }
+
+      </script>
+      <section class="hardware">
+        <a class="scroll-top" href="#nav">Back to Top <i class="fa fa-long-arrow-up" aria-hidden="true"></i></a>
+        <img class="divide" src="http://museresources.com/images/soft%20slit%20separator.png?crc=4104113101">
+      	<a name="hardware"></a>
+      	<h2>Hardware</h2>
+      	<div class="product">
+      		<div class="product-image">
+      			<img src="public/img/al5d.png">
+      		</div>
+      		<div class="product-specs">
+      			<h3>Lynxmotion AL5D Robotic Arm</h3>
+      			<ul>
+      				<li>Aluminum robotic arm</li>
+      				<li>Servo Erector Set components</li>
+      				<li>10 oz. lift capacity at full reach</li>
+      				<li>Base Rotation</li>
+      				<li>Single Plane Shoulder</li>
+      				<li>Elbow Motion</li>
+      				<li>Functional Gripper</li>
+      			</ul>
+      		</div>
+      	</div>
+      	<img class="divide" src="http://museresources.com/images/soft%20slit%20separator.png?crc=4104113101">
+      	<div class="product">
+      		<div class="product-specs">
+      			<h3>Arduino Uno</h3>
+      			<ul>
+      				<li>Microcontroller board</li>
+      				<li>14 digital input/output pins</li>
+      				<li>6 analog inputs</li>
+      				<li>16 MHz crystal oscillator</li>
+      				<li>USB connection</li>
+      				<li>Power jack</li>
+      				<li>ICSP header</li>
+      				<li>Reset button</li>
+      			</ul>
+      		</div>
+      		<div class="product-image">
+      			<img src="public/img/arduino.png">
+      		</div>
+      	</div>
+      	<img class="divide" src="http://museresources.com/images/soft%20slit%20separator.png?crc=4104113101">
+      	<div class="product">
+      		<div class="product-image">
+      			<img src="public/img/leap.png">
+      		</div>
+      		<div class="product-specs">
+      			<h3>Leap Motion Controller</h3>
+      			<ul>
+      				<li>USB peripheral device</li>
+      				<li>Tracks motion</li>
+      				<li>Two monochromatic IR cameras</li>
+      				<li>Three infrared LEDs</li>
+      				<li>1 meter range</li>
+      				<li>~200 frames per second of reflected data</li>
+      				<li>Accuracy within 0.7 millimeters</li>
+      			</ul>
+      		</div>
+      	</div>
+      	<a class="scroll-top" href="#nav">Back to Top <i class="fa fa-long-arrow-up" aria-hidden="true"></i></a>
+        <img class="divide" src="http://museresources.com/images/soft%20slit%20separator.png?crc=4104113101">
+      </section>
+      <section class="developers">
+      	<a name="developerz"></a>
+      	<h2>Developers</h2>
+      	<div id="developers">
+      		<div class="developer">
+      			<img class="dev-pic" src="public/img/john.jpg">
+      			<h3>John Dowd</h3>
+      			<h4>Track: C#/.Net</h4>
+            <a href="https://github.com/irishdowd10" target="_blank">
+              <i class="fa fa-github fa-5x" aria-hidden="true"></i>
+              <p>github</p>
+            </a>
+      		</div>
+      		<div class="developer">
+      			<img class="dev-pic" src="public/img/pete.jpg">
+      			<h3>Pete Lazuran</h3>
+      			<h4>Track: C#/.Net</h4>
+            <a href="https://github.com/NaruzaL" target="_blank">
+              <i class="fa fa-github fa-5x" aria-hidden="true"></i>
+              <p>github</p>
+            </a>
+      		</div>
+      		<div class="developer">
+      			<img class="dev-pic" src="public/img/daniel.jpeg">
+      			<h3>Daniel Lopez</h3>
+      			<h4>Track: CSS/Design</h4>
+            <a href="https://github.com/DLopez6877" target="_blank">
+              <i class="fa fa-github fa-5x" aria-hidden="true"></i>
+              <p>github</p>
+            </a>
+      		</div>
+          <div class="developer">
+            <img class="dev-pic" src="public/img/isabella.png">
+            <h3>Isabella Abatgis</h3>
+            <h4>Track: CSS/Design</h4>
+            <a href="https://github.com/sigtaba" target="_blank">
+              <i class="fa fa-github fa-5x" aria-hidden="true"></i>
+              <p>github</p>
+            </a>
+          </div>
+      	</div>
+      </section>
+      <a class="scroll-top" href="#nav">Back to Top <i class="fa fa-long-arrow-up" aria-hidden="true"></i></a>
+    </section>
+  </body>
+</html>
