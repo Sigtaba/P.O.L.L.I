@@ -13,6 +13,10 @@
 * Control AL5D Lynxmotion Robotic Arm by web-based user-interface controls
 * Analytics for tracking mechanical functions
 
+## Screenshot
+
+<h1 align="center"><img src="https://github.com/Sigtaba/P.O.L.L.I/blob/master/public/img/polli-desktop.png?raw=true"></h1>
+
 ## Technologies Used
 - [jQuery](http://www.w3schools.com/jquery/jquery_ref_ajax.asp) - jQuery simplifies HTML document traversing, event handling, animating, and Ajax interactions for rapid web development.
 - [Node.js - NPM](https://www.w3schools.com/nodejs/nodejs_npm.asp) - NPM is the package manager for JavaScript and the world’s largest software registry. Discover packages of reusable code — and assemble them in powerful new ways.
